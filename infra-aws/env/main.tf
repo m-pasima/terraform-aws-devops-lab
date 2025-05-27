@@ -47,6 +47,8 @@ module "jenkins" {
   security_group_id = aws_security_group.app_sg.id
   user_data_path    = "../scripts/jenkins.sh"
   instance_name     = "jenkins-server"
+  key_name = "maven"
+
 }
 module "sonarqube" {
   source            = "../modules/ec2"
@@ -56,6 +58,8 @@ module "sonarqube" {
   security_group_id = aws_security_group.app_sg.id
   user_data_path    = "../scripts/sonarqube.sh"
   instance_name     = "sonarqube-server"
+  key_name = "maven"
+
 }
 module "nexus" {
   source            = "../modules/ec2"
@@ -65,6 +69,8 @@ module "nexus" {
   security_group_id = aws_security_group.app_sg.id
   user_data_path    = "../scripts/nexus.sh"
   instance_name     = "nexus-server"
+  key_name = "maven"
+
 }
 module "tomcat" {
   source            = "../modules/ec2"
@@ -74,4 +80,6 @@ module "tomcat" {
   security_group_id = aws_security_group.app_sg.id
   user_data_path    = "../scripts/tomcat.sh"
   instance_name     = "tomcat-server"
+  key_name = "maven"
+
 }
