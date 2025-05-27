@@ -44,7 +44,7 @@ module "jenkins" {
   ami               = "ami-05f861f26432a5eed"
   instance_type     = "t2.medium"
   subnet_id         =  data.aws_subnets.default_subnets.ids[0]
-  security_group_id = aws_security_group.app_sg.id
+  security_group_id = aws_security_group.test_sg.id
   user_data_path    = "../scripts/jenkins.sh"
   instance_name     = "jenkins-server"
   key_name = "maven"
@@ -55,7 +55,7 @@ module "sonarqube" {
   ami               = "ami-0fc32db49bc3bfbb1"
   instance_type     = "t2.medium"
   subnet_id         =  data.aws_subnets.default_subnets.ids[1]
-  security_group_id = aws_security_group.app_sg.id
+  security_group_id = aws_security_group.test_sg.id
   user_data_path    = "../scripts/sonarqube.sh"
   instance_name     = "sonarqube-server"
   key_name = "maven"
@@ -66,7 +66,7 @@ module "nexus" {
   ami               = "ami-0fc32db49bc3bfbb1"
   instance_type     = "t2.medium"
   subnet_id         =  data.aws_subnets.default_subnets.ids[2]
-  security_group_id = aws_security_group.app_sg.id
+  security_group_id = aws_security_group.test_sg.id
   user_data_path    = "../scripts/nexus.sh"
   instance_name     = "nexus-server"
   key_name = "maven"
@@ -77,7 +77,7 @@ module "tomcat" {
   ami               = "ami-0fc32db49bc3bfbb1"
   instance_type     = "t2.micro"
   subnet_id         =  data.aws_subnets.default_subnets.ids[0]
-  security_group_id = aws_security_group.app_sg.id
+  security_group_id = aws_security_group.test_sg.id
   user_data_path    = "../scripts/tomcat.sh"
   instance_name     = "tomcat-server"
   key_name = "maven"
