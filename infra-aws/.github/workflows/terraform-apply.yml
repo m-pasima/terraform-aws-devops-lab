@@ -1,8 +1,8 @@
 name: Terraform Apply
+
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:   # <-- This enables manual trigger from GitHub Actions tab
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -10,16 +10,19 @@ jobs:
       contents: read
       id-token: write
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-    - name: Terraform Init
-      run: terraform init
-      working-directory: env
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
-      working-directory: env
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: us-east-1
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: env
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: env
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: eu-west-1
