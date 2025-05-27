@@ -6,9 +6,13 @@ data "aws_vpc" "default" {
   default = true
 }
 
-data "aws_subnet_ids" "default_subnets" {
-  vpc_id = data.aws_vpc.default.id
+data "aws_subnets" "default_subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
 }
+
 
 resource "aws_security_group" "app_sg" {
   name        = "app-servers-sg"
@@ -39,7 +43,7 @@ module "jenkins" {
   source            = "../modules/ec2"
   ami               = "ami-05f861f26432a5eed"
   instance_type     = "t2.medium"
-  subnet_id         = data.aws_subnet_ids.default_subnets.ids[0]
+  subnet_id         =  data.aws_subnets.default_subnets.ids[0]
   security_group_id = aws_security_group.app_sg.id
   user_data_path    = "../scripts/jenkins.sh"
   instance_name     = "jenkins-server"
@@ -48,7 +52,7 @@ module "sonarqube" {
   source            = "../modules/ec2"
   ami               = "ami-0fc32db49bc3bfbb1"
   instance_type     = "t2.medium"
-  subnet_id         = data.aws_subnet_ids.default_subnets.ids[1]
+  subnet_id         =  data.aws_subnets.default_subnets.ids[1]
   security_group_id = aws_security_group.app_sg.id
   user_data_path    = "../scripts/sonarqube.sh"
   instance_name     = "sonarqube-server"
@@ -57,7 +61,7 @@ module "nexus" {
   source            = "../modules/ec2"
   ami               = "ami-0fc32db49bc3bfbb1"
   instance_type     = "t2.medium"
-  subnet_id         = data.aws_subnet_ids.default_subnets.ids[2]
+  subnet_id         =  data.aws_subnets.default_subnets.ids[2]
   security_group_id = aws_security_group.app_sg.id
   user_data_path    = "../scripts/nexus.sh"
   instance_name     = "nexus-server"
@@ -66,7 +70,7 @@ module "tomcat" {
   source            = "../modules/ec2"
   ami               = "ami-0fc32db49bc3bfbb1"
   instance_type     = "t2.micro"
-  subnet_id         = data.aws_subnet_ids.default_subnets.ids[0]
+  subnet_id         =  data.aws_subnets.default_subnets.ids[0]
   security_group_id = aws_security_group.app_sg.id
   user_data_path    = "../scripts/tomcat.sh"
   instance_name     = "tomcat-server"
