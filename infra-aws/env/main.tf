@@ -14,8 +14,8 @@ data "aws_subnets" "default_subnets" {
 }
 
 
-resource "aws_security_group" "app_sg" {
-  name        = "app-servers-sg"
+resource "aws_security_group" "test_sg" {
+  name        = "test-servers-sg"
   description = "Allow HTTP access to apps"
   vpc_id      = data.aws_vpc.default.id
 
