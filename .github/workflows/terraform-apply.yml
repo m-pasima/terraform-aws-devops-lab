@@ -1,32 +1,27 @@
-
-name: Terraform Destroy
+name: Terraform Apply
 
 on:
   workflow_dispatch:
 
 jobs:
-  destroy:
+  apply:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download terraform state
-        uses: actions/download-artifact@v4
-        with:
-          name: terraform-state
-          path: infra-aws/env
       - uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
         run: terraform init
         working-directory: infra-aws/env
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
         working-directory: infra-aws/env
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: eu-west-2
-      - name: Save updated state as artifact
+      - name: Save state as artifact
         uses: actions/upload-artifact@v4
         with:
           name: terraform-state
           path: infra-aws/env/terraform.tfstate
+
