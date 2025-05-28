@@ -2,6 +2,11 @@ name: Terraform Destroy
 
 on:
   workflow_dispatch:
+    inputs:
+      artifact_run_id:
+        description: 'Workflow run ID for terraform-state artifact'
+        required: true
+        type: string
 
 jobs:
   destroy:
@@ -13,6 +18,8 @@ jobs:
         with:
           name: terraform-state
           path: infra-aws/env
+          repository: m-pasima/terraform-aws-devops-lab
+          run-id: ${{ github.event.inputs.artifact_run_id }}
       - uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
         run: terraform init
