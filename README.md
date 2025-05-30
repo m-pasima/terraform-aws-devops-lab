@@ -25,7 +25,7 @@ infra-aws/
 
 ## 🚀 Getting Started
 
-1. **Clone the repo** and unzip contents.
+1. **Clone the repo** `https://github.com/m-pasima/terraform-aws-devops-lab.git`
 2. Update variables as needed (e.g., `ami` for your region).
 3. **Provision Remote State Infrastructure**
 
