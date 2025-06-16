@@ -5,7 +5,7 @@ yum install -y tar wget shadow-utils coreutils
 CORRETTO_RPM="amazon-corretto-17-x64-linux-jdk.rpm"
 curl -sSL -o "/tmp/${CORRETTO_RPM}" "https://corretto.aws/downloads/latest/${CORRETTO_RPM}"
 yum localinstall -y "/tmp/${CORRETTO_RPM}"
-export JAVA_HOME="/usr/lib/jvm/java-17-amazon-corretto.x86_64"
+export JAVA_HOME="/usr/lib/jvm/java-17-amazon-corretto"
 echo "→ JAVA_HOME=${JAVA_HOME}"
 groupadd -r tomcat || true
 useradd -r -g tomcat -d /opt/tomcat -s /sbin/nologin tomcat || true
@@ -32,7 +32,7 @@ After=network.target
 Type=forking
 User=tomcat
 Group=tomcat
-Environment="JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64"
+Environment="JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto"
 Environment="CATALINA_HOME=/opt/tomcat"
 Environment="CATALINA_BASE=/opt/tomcat"
 Environment="CATALINA_PID=/opt/tomcat/temp/tomcat.pid"
