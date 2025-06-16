@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 yum update -y
-yum install -y fontconfig java-17-amazon-corretto wget firewalld
+yum install -y fontconfig java-21-openjdk wget firewalld
 if systemctl is-enabled firewalld >/dev/null 2>&1; then
     systemctl start firewalld
     systemctl enable firewalld
